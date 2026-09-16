@@ -1,0 +1,99 @@
+{
+  "n_patients": 40336,
+  "n_rows": 1552210,
+  "patient_prevalence": 0.0727,
+  "row_prevalence": 0.018,
+  "per_set": {
+    "A": {
+      "patients": 20336,
+      "septic": 1790,
+      "patient_prevalence": 0.088
+    },
+    "B": {
+      "patients": 20000,
+      "septic": 1142,
+      "patient_prevalence": 0.0571
+    }
+  },
+  "n_hours_distribution": {
+    "min": 8,
+    "q25": 24,
+    "median": 38,
+    "mean": 38.48,
+    "q75": 47,
+    "max": 336
+  },
+  "onset_iculos_septic": {
+    "median": 29,
+    "mean": 50.9
+  },
+  "positive_block_length": {
+    "median": 10,
+    "mean": 9.52,
+    "max": 10,
+    "value_counts": {
+      "1": 5,
+      "2": 3,
+      "4": 2,
+      "6": 5,
+      "7": 4,
+      "8": 248,
+      "9": 795,
+      "10": 1870
+    }
+  },
+  "missingness_pct": {
+    "HR": 9.88,
+    "O2Sat": 13.06,
+    "Temp": 66.16,
+    "SBP": 14.58,
+    "MAP": 12.45,
+    "DBP": 31.35,
+    "Resp": 15.35,
+    "EtCO2": 96.29,
+    "BaseExcess": 94.58,
+    "HCO3": 95.81,
+    "FiO2": 91.67,
+    "pH": 93.07,
+    "PaCO2": 94.44,
+    "SaO2": 96.55,
+    "AST": 98.38,
+    "BUN": 93.13,
+    "Alkalinephos": 98.39,
+    "Calcium": 94.12,
+    "Chloride": 95.46,
+    "Creatinine": 93.9,
+    "Bilirubin_direct": 99.81,
+    "Glucose": 82.89,
+    "Lactate": 97.33,
+    "Magnesium": 93.69,
+    "Phosphate": 95.99,
+    "Potassium": 90.69,
+    "Bilirubin_total": 98.51,
+    "TroponinI": 99.05,
+    "Hct": 91.15,
+    "Hgb": 92.62,
+    "PTT": 97.06,
+    "WBC": 93.59,
+    "Fibrinogen": 99.34,
+    "Platelets": 94.06,
+    "Age": 0.0,
+    "Gender": 0.0,
+    "Unit1": 39.43,
+    "Unit2": 39.43,
+    "HospAdmTime": 0.0,
+    "ICULOS": 0.0
+  },
+  "integrity_flags": {
+    "noncontiguous_iculos": 0,
+    "duplicate_iculos": 0,
+    "nonmonotonic_label": 0,
+    "excess_positive": 0
+  },
+  "integrity_flagged_pids": {
+    "noncontiguous_iculos": [],
+    "duplicate_iculos": [],
+    "nonmonotonic_label": [],
+    "excess_positive": []
+  }
+}

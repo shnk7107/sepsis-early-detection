@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+Untitled*.ipynb
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# Raw / generated data
+*.psv
+*.parquet
+*.pkl
+*.pickle
+*.feather
+
+# Generated prediction files
+data/predictions/*.csv
+*crosssite_preds*.csv
+
+# Archives
+*.zip
+
+# Keep documentation inside data/
+!data/
+!data/README.md

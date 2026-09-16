@@ -1,0 +1,71 @@
+========================================================================================================
+PS-A ANALYSIS  [psA_matched]   target-site prevalence (AUPRC is prevalence-dependent)
+========================================================================================================
+  A->B: target = site B   n= 5824   prevalence= 7.14%
+  B->A: target = site A   n= 9954   prevalence= 7.14%
+
+========================================================================================================
+Q1  ORDERING RELIANCE, cross-site.   delta = AUPRC(full) - AUPRC(ordering_dropped)
+    Both arms scored on the SAME target patients -> prevalence cancels. Paired bootstrap.
+    <0 with CI excluding 0  =>  dropping ordering IMPROVES transfer (a shortcut).
+========================================================================================================
+     cond direction    model   delta      lo      hi   sig
+   1_none      A->B       RF +0.0047 -0.0069 +0.0162 False
+   1_none      A->B  xgboost -0.0053 -0.0173 +0.0053 False
+   1_none      A->B lightgbm +0.0021 -0.0090 +0.0135 False
+   1_none      B->A       RF +0.0047 -0.0015 +0.0107 False
+   1_none      B->A  xgboost +0.0020 -0.0047 +0.0097 False
+   1_none      B->A lightgbm -0.0020 -0.0081 +0.0047 False
+5_SMOTENC      A->B       RF -0.0020 -0.0165 +0.0115 False
+5_SMOTENC      A->B  xgboost -0.0017 -0.0142 +0.0091 False
+5_SMOTENC      A->B lightgbm +0.0010 -0.0117 +0.0115 False
+5_SMOTENC      B->A       RF -0.0009 -0.0058 +0.0039 False
+5_SMOTENC      B->A  xgboost -0.0031 -0.0093 +0.0033 False
+5_SMOTENC      B->A lightgbm -0.0043 -0.0103 +0.0014 False
+
+  mean ordering delta = -0.0004 | CI excludes 0 in 0/12 cells
+
+========================================================================================================
+Q2  RESAMPLING x TRANSPORT.  penalty = AUPRC(1_none) - AUPRC(5_SMOTENC)   (>0 = SMOTENC hurts)
+    within_tgt = train AND test on the TARGET site (CV).  cross = train on source, test on target.
+    Both are scored on the target distribution -> same prevalence -> DiD is clean.
+    DiD > 0  =>  SMOTENC hurts MORE when transferring than when staying in-site.  arm=full.
+========================================================================================================
+--- absolute AUPRC penalties ---
+direction    model  within_tgt_pen  cross_pen     DiD  cross_pen_lo  cross_pen_hi  cross_sig
+     A->B       RF         +0.0608    +0.0334 -0.0274       +0.0150       +0.0536       True
+     A->B  xgboost         +0.0206    +0.0047 -0.0160       -0.0102       +0.0195      False
+     A->B lightgbm         +0.0198    +0.0025 -0.0173       -0.0113       +0.0159      False
+     B->A       RF         +0.0141    +0.0378 +0.0237       +0.0269       +0.0517       True
+     B->A  xgboost         +0.0165    +0.0192 +0.0026       +0.0095       +0.0296       True
+     B->A lightgbm         +0.0151    +0.0225 +0.0074       +0.0132       +0.0325       True
+
+--- RELATIVE penalties (% of that setting's own baseline; scale-free, use these) ---
+direction    model  within_pen_rel  cross_pen_rel  DiD_rel
+     A->B       RF           +28.2          +21.3     -6.9
+     A->B  xgboost           +10.5           +4.1     -6.4
+     A->B lightgbm           +10.2           +2.3     -7.9
+     B->A       RF            +8.3          +29.0    +20.7
+     B->A  xgboost            +9.1          +16.1     +7.0
+     B->A lightgbm            +8.5          +19.2    +10.7
+
+  mean within-target SMOTENC penalty : +0.0245  (+12.5%)
+  mean cross-site  SMOTENC penalty   : +0.0200  (+15.4%)
+  mean DiD (absolute)                : -0.0045
+  mean DiD (relative)                : +2.9%
+  cross-site penalty CI excludes 0 in: 4/6 cells
+
+========================================================================================================
+CONTEXT  transportability gap = within_TARGET (oracle: trained on target) - cross (trained on source)
+         Both tested on the target site -> same prevalence -> a clean domain-shift measure.
+         arm=full, condition=1_none.
+========================================================================================================
+direction    model  oracle_within_tgt  cross    gap  pct_drop  source_within_ref
+     A->B       RF             0.2152 0.1565 0.0586   27.2509             0.1698
+     A->B  xgboost             0.1961 0.1125 0.0835   42.5979             0.1810
+     A->B lightgbm             0.1946 0.1095 0.0851   43.7240             0.1766
+     B->A       RF             0.1698 0.1302 0.0396   23.3291             0.2152
+     B->A  xgboost             0.1810 0.1187 0.0622   34.3850             0.1961
+     B->A lightgbm             0.1766 0.1169 0.0598   33.8426             0.1946
+
+  mean oracle (train on target) = 0.189  ->  cross (train on source) = 0.124   (mean relative drop 34%)

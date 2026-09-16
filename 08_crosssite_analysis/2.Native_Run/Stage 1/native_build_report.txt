@@ -1,0 +1,35 @@
+=== NATIVE BUILD · per-site control ratio ===
+  set A: raw prevalence  8.80%  ->  R=10  ->  achieved  9.09%   (septics 711, controls needed 7110)
+  set B: raw prevalence  5.71%  ->  R=17  ->  achieved  5.56%   (septics 416, controls needed 7072)
+  prevalence gap A:B = 1.64x   (matched set was 1.00x by construction)
+
+--- control assignment ---
+  controls assigned 14182  (unique 14182)
+  no shortfalls: every position filled to demand (exact position match holds)
+
+--- control window integrity ---
+  window rows 85092 (expected 85092)
+  rel_hour range (-6, -1) (expect (-6, -1))
+  windows != 6 rows   : 0  (must be 0)
+  controls reused      : 0  (must be 0)
+  positive-label rows  : 0  (must be 0)
+
+--- confound match (window-end position, per set) ---
+  set A: identical position distribution: True
+  set B: identical position distribution: True
+
+=== NATIVE FEATURE MATRIX ===
+  rows 15309  (septic 1127, control 14182)
+  features 243
+  per-site n / positives / prevalence:
+    set A: n=  7821  positives= 711  prevalence= 9.09%
+    set B: n=  7488  positives= 416  prevalence= 5.56%
+
+  indicator NaNs (must be 0): 0
+  value-NaN rate, vital: 18.2%
+  value-NaN rate, lab  : 80.2%
+
+  feature_tags identical to matched run: False  (PROBLEM - investigate)
+
+STATUS: PASS
+wrote: ./features_native.parquet, ./feature_tags_native.csv, ./control_windows_native.parquet, ./window_manifest_control_native.csv

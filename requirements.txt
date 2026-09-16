@@ -1,0 +1,34 @@
+# Sepsis circularity audit — pipeline dependencies
+# Python 3.10+
+#
+# ---------------------------------------------------------------------------
+# ACTION REQUIRED: replace the ==X.Y.Z placeholders with the versions that
+# ACTUALLY ran the pipeline. Unpinned versions will NOT reproduce the results.
+#
+# In the Colab session that ran the pipeline, execute:
+#
+#   !pip freeze | grep -iE "^(numpy|pandas|scipy|scikit-learn|imbalanced-learn|xgboost|lightgbm|matplotlib)="
+#
+# and paste the output over the block below.
+# ---------------------------------------------------------------------------
+#
+# WHY PINNING MATTERS HERE (not boilerplate):
+#   imbalanced-learn generates SYNTHETIC samples. SMOTE/SMOTENC/ADASYN/
+#   BorderlineSMOTE/SMOTETomek output depends on the library version even with a
+#   fixed seed -- neighbour selection and interpolation internals have changed
+#   across releases. The 8-condition resampling sweep is a core result of this
+#   study, so an unpinned imbalanced-learn silently breaks reproduction.
+#   scikit-learn matters for the same reason (RandomForest tie-breaking,
+#   StratifiedKFold ordering, ColumnTransformer behaviour).
+
+imbalanced-learn==0.14.2
+lightgbm==4.6.0
+matplotlib==3.10.0
+numpy==2.0.2
+pandas==2.2.2
+scikit-learn==1.6.1
+scipy==1.16.3
+xgboost==3.3.0
+
+# Seed policy: SEED = 42 for all stochastic operations (split, StratifiedKFold,
+# RF/XGB/LGBM, all imblearn samplers). PS-A bootstrap: NB = 2000 iterations.

@@ -1,0 +1,5 @@
+Only use the output of day4 for this test, for additional test along with this use all the other output as well
+
+In a leakage-controlled, position- and site-matched patient-level design, individual lab-based SOFA components could not be shown to drive prediction because their measurement indicators are collinear across the full lab panel (|r| ≥ 0.91), making component-level ablation uninformative; the isolable SOFA signal — the vital-sign proxies (MAP, respiration) — showed reliance that increased under synthetic oversampling (mean ΔAUPRC +0.013, significant in 4/8 conditions, concentrated in the oversampling family).
+
+Day 4 objective

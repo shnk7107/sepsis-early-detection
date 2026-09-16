@@ -1,0 +1,47 @@
+========================================================================================================
+Q1  ORDERING RELIANCE cross-site. delta = AUPRC(full) - AUPRC(ordering_dropped)
+    <0 & CI excludes 0 => dropping ordering IMPROVES transfer (shortcut). Paired target bootstrap.
+========================================================================================================
+     cond direction    model   delta      lo      hi   sig
+   1_none      A->B       RF +0.0047 -0.0069 +0.0162 False
+   1_none      A->B  xgboost -0.0053 -0.0173 +0.0053 False
+   1_none      A->B lightgbm +0.0021 -0.0090 +0.0135 False
+   1_none      B->A       RF +0.0047 -0.0015 +0.0107 False
+   1_none      B->A  xgboost +0.0020 -0.0047 +0.0097 False
+   1_none      B->A lightgbm -0.0020 -0.0081 +0.0047 False
+5_SMOTENC      A->B       RF -0.0020 -0.0165 +0.0115 False
+5_SMOTENC      A->B  xgboost -0.0017 -0.0142 +0.0091 False
+5_SMOTENC      A->B lightgbm +0.0010 -0.0117 +0.0115 False
+5_SMOTENC      B->A       RF -0.0009 -0.0058 +0.0039 False
+5_SMOTENC      B->A  xgboost -0.0031 -0.0093 +0.0033 False
+5_SMOTENC      B->A lightgbm -0.0043 -0.0103 +0.0014 False
+
+  mean ordering delta = -0.0004 | cells with CI excluding 0: 0/12
+
+========================================================================================================
+Q2  RESAMPLING x TRANSPORT. SMOTENC penalty = AUPRC(1_none) - AUPRC(5_SMOTENC)  (>0 = SMOTENC hurts)
+    DiD = cross_penalty - within_penalty  (>0 = SMOTENC hurts MORE across sites). arm=full.
+========================================================================================================
+direction    model  within_pen  cross_pen     DiD  cross_pen_lo  cross_pen_hi  cross_sig
+     A->B       RF     +0.0141    +0.0334 +0.0193       +0.0150       +0.0536       True
+     A->B  xgboost     +0.0165    +0.0047 -0.0119       -0.0102       +0.0195      False
+     A->B lightgbm     +0.0151    +0.0025 -0.0126       -0.0113       +0.0159      False
+     B->A       RF     +0.0608    +0.0378 -0.0230       +0.0269       +0.0517       True
+     B->A  xgboost     +0.0206    +0.0192 -0.0015       +0.0095       +0.0296       True
+     B->A lightgbm     +0.0198    +0.0225 +0.0027       +0.0132       +0.0325       True
+
+  mean within SMOTENC penalty = +0.0245 | mean cross = +0.0200
+  mean transfer-penalty DiD   = -0.0045 | cross penalty CI excludes 0: 4/6
+
+========================================================================================================
+CONTEXT  transportability gap = within-source AUPRC - cross-site AUPRC (arm=full, 1_none)
+========================================================================================================
+direction    model  within  cross    gap  pct_drop
+     A->B       RF  0.1698 0.1565 0.0133    7.8382
+     A->B  xgboost  0.1810 0.1125 0.0684   37.8110
+     A->B lightgbm  0.1766 0.1095 0.0671   37.9989
+     B->A       RF  0.2152 0.1302 0.0849   39.4788
+     B->A  xgboost  0.1961 0.1187 0.0773   39.4356
+     B->A lightgbm  0.1946 0.1169 0.0777   39.9514
+
+  mean in-distribution AUPRC=0.189 -> cross-site=0.124 (mean drop 34%)
